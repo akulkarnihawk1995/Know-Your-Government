@@ -212,7 +212,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (dismissFlag == 0)
         {
-            builder.setIcon(R.drawable.ic_location_error);
+            //builder.setIcon(R.drawable.location_error);
+            builder.setIcon(R.drawable.location_error);
             builder.setTitle(R.string.locationErrorTitle);
             builder.setMessage(message);
 
@@ -227,7 +228,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setIcon(R.drawable.ic_network_error);
+        builder.setIcon(R.drawable.network_error);
         builder.setTitle(R.string.networkErrorTitle);
         builder.setMessage(message);
 
