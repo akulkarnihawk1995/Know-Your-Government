@@ -1,0 +1,2 @@
+rootProject.name='Know-Your-Government-SHDH'
+include ':app'
