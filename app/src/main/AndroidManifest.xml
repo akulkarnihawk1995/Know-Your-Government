@@ -14,7 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".NewsActivity"></activity>
+        <activity
+            android:name=".NewsActivity"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".SplashActivity"
             android:theme="@style/SplashScreenTheme">

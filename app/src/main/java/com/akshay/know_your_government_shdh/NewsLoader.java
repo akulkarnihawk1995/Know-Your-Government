@@ -1,5 +1,6 @@
 package com.akshay.know_your_government_shdh;
 
+import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -19,10 +20,11 @@ import java.util.Date;
 
 public class NewsLoader extends AsyncTask<String, Void, ArrayList<Article>>
 {
-    NewsActivity newsActivity;
+    @SuppressLint("StaticFieldLeak")
+    private NewsActivity newsActivity;
     private static final String TAG = "NewsLoader";
 
-    public NewsLoader(NewsActivity newsActivity) {
+    NewsLoader(NewsActivity newsActivity) {
         this.newsActivity = newsActivity;
     }
 
@@ -37,7 +39,6 @@ public class NewsLoader extends AsyncTask<String, Void, ArrayList<Article>>
         finalData = parseJSON(data);
         return finalData;
     }
-
 
 
     private String getOfficialDatafromURL(String URL) {

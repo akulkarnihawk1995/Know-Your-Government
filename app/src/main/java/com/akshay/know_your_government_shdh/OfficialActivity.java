@@ -311,7 +311,7 @@ public class OfficialActivity extends AppCompatActivity
 
     public void news_clicked(View v)
     {
-        String token = temp.getName().replaceAll("\\s", "");
+        String token = temp.getName();
         Log.d(TAG, "news_clicked: bp: TOKEN: " + token);
         Intent i = new Intent(this,NewsActivity.class);
         i.putExtra("token", token);

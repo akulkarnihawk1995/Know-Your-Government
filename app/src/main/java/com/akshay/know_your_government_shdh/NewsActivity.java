@@ -24,7 +24,7 @@ public class NewsActivity extends AppCompatActivity implements View.OnClickListe
     ArrayList<Article> articleArrayList = new ArrayList<>();
     ArticleAdapter articleAdapter;
 
-    TextView nn_msg1, nn_msg2, topHeadLines;
+    TextView nn_msg1, nn_msg2, politician_name;
     Button tryAgain;
     SwipeRefreshLayout swiper;
     RecyclerView rv;
@@ -90,8 +90,10 @@ public class NewsActivity extends AppCompatActivity implements View.OnClickListe
         nn_msg1 = findViewById(R.id.nonetworkIcon);
         nn_msg2 = findViewById(R.id.nonetworkMsg);
         tryAgain = findViewById(R.id.tryAgain);
+        politician_name = findViewById(R.id.polotician_name);
         rv = findViewById(R.id.recycler);
         token = getIntent().getStringExtra("token");
+        politician_name.setText(token);
     }
 
     public boolean networkChecker()
@@ -125,5 +127,12 @@ public class NewsActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(i);
         }
 
+    }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 }
