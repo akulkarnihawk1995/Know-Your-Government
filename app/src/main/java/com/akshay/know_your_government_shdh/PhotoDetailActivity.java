@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
 public class PhotoDetailActivity extends AppCompatActivity
@@ -99,10 +100,10 @@ public class PhotoDetailActivity extends AppCompatActivity
     {
         Log.d(TAG, "bp: loadProfilePicture: URL: " + URL);
 
-        Picasso.get()
+        Glide.with(this)
                 .load(URL)
-                .error(R.drawable.brokenimage)
                 .placeholder(R.drawable.placeholder)
+                .error(R.drawable.brokenimage)
                 .into(dp);
     }
 

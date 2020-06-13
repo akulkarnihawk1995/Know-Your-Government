@@ -62,7 +62,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleViewHolder>
                 {
                     Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                     sharingIntent.setType("text/plain");
-                    String shareBody = "Checkout this new story from News Gateway:\n" + temp.getUrl();
+                    String shareBody = "Checkout this new story from Know Your Government :\n" + temp.getUrl();
                     sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Know Your Government");
                     sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
                     newsActivity.startActivity(sharingIntent);

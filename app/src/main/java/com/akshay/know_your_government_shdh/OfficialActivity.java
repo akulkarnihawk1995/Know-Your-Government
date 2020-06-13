@@ -18,6 +18,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -329,7 +331,8 @@ public class OfficialActivity extends AppCompatActivity
         }
         else
         {
-            Picasso.get()
+
+            Glide.with(this)
                     .load(URL)
                     .placeholder(R.drawable.placeholder)
                     .error(R.drawable.brokenimage)
