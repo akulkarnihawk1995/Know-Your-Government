@@ -1,15 +1,19 @@
 package com.akshay.know_your_government_shdh;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Criteria;
 import android.location.Geocoder;
@@ -19,7 +23,11 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +57,51 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setupComponents();
+        swiper.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh()
+            {
+                setUpLocation();
+                convertLatLon();
+
+                if (!currentLatLon.equals(""))
+                {
+                    if(networkChecker())
+                    {
+                        new OfficialLoader(MainActivity.this).execute(geoCodedLatLon);
+                    }
+                    else
+                    {
+                        noNetworkDialog(getString(R.string.networkErrorMsg1));
+                    }
+                }
+                else
+                {
+                    LocationDialog(getString(R.string.locationErrorMsg1), 0);
+                }
+                swiper.setRefreshing(false);
+            }
+        });
+
+        officialAdapter = new OfficialAdapter(officialArrayList,this);
+        rv.setAdapter(officialAdapter);
+        rv.setLayoutManager(new LinearLayoutManager(this));
+
+        setUpLocation();
+        convertLatLon();
+
+        if (!currentLatLon.equals(""))
+        {
+            if(networkChecker())
+            {
+                new OfficialLoader(this).execute(geoCodedLatLon);
+            }
+            else
+            {
+                noNetworkDialog(getString(R.string.networkErrorMsg1));
+            }
+        }
     }
 
     public boolean networkChecker()
@@ -199,9 +252,115 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == MY_LOCATION_REQUEST_CODE_ID)
+        {
+            if (permissions[0].equals(Manifest.permission.ACCESS_FINE_LOCATION) && grantResults[0] == PERMISSION_GRANTED)
+            {
+                detectLocation();
+                if(networkChecker())
+                {
+                    LocationDialog("",1);
+                    setUpLocation();
+                    convertLatLon();
+                    new OfficialLoader(this).execute(geoCodedLatLon);
+                }
+                else
+                {
+                    noNetworkDialog(getString(R.string.networkErrorMsg1));
+                }
+                return;
+            }
+        }
+
+        LocationDialog(getString(R.string.locationErrorMsg1),0);
+        location.setText(R.string.no_perm);
+    }
 
     @Override
-    public void onClick(View v) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.opt_menu,menu);
+        return  true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.search:
+                if(networkChecker())
+                {
+                    search();
+                }
+                else
+                    noNetworkDialog(getString(R.string.networkErrorMsg2));
+                break;
+            case R.id.about:
+                Intent i = new Intent(this, AboutActivity.class);
+                startActivity(i);
+                break;
+            default:
+                Toast.makeText(this,"Invalid Option",Toast.LENGTH_SHORT).show();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void search()
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        final EditText et = new EditText(this);
+        et.setGravity(Gravity.CENTER_HORIZONTAL);
+        builder.setView(et);
+        builder.setIcon(R.drawable.ic_search_accent);
+
+        builder.setPositiveButton("Search", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id)
+            {
+                String searchString = et.getText().toString().trim();
+                if(!searchString.equals(""))
+                {
+                    location.setText("");
+                    new OfficialLoader(MainActivity.this).execute(searchString);
+                }
+                else
+                {
+                    Toast.makeText(MainActivity.this, R.string.nullSearchStringMsg, Toast.LENGTH_SHORT).show();
+                    search();
+                }
+
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id)
+            {
+                Toast.makeText(MainActivity.this, R.string.negativeBtn2, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        builder.setMessage(R.string.searchMsg);
+        builder.setTitle(R.string.searchTitle);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    @Override
+    public void onClick(View view)
+    {
+        int position = rv.getChildAdapterPosition(view);
+        Official temp = officialArrayList.get(position);
+
+        Intent i = new Intent(this,OfficialActivity.class);
+        i.putExtra("location", location.getText());
+        i.putExtra("official",temp);
+        startActivity(i);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 }
