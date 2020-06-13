@@ -309,6 +309,16 @@ public class OfficialActivity extends AppCompatActivity
         getWindow().setNavigationBarColor(getColor(R.color.dark_grey));
     }
 
+    public void news_clicked(View v)
+    {
+        String token = temp.getName().replaceAll("\\s", "");
+        Log.d(TAG, "news_clicked: bp: TOKEN: " + token);
+        Intent i = new Intent(this,NewsActivity.class);
+        i.putExtra("token", token);
+        startActivity(i);
+
+    }
+
     void loadProfilePicture(String URL)
     {
         Log.d(TAG, "bp: loadProfilePicture: URL: " + URL);
