@@ -15,21 +15,24 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".PhotoDetailActivity"
-            android:parentActivityName=".MainActivity"/>
-        <activity
-            android:name=".AboutActivity"
-            android:parentActivityName=".MainActivity"/>
-        <activity
-            android:name=".OfficialActivity"
-            android:parentActivityName=".MainActivity"/>
-        <activity android:name=".MainActivity">
+            android:name=".SplashActivity"
+            android:theme="@style/SplashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".PhotoDetailActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".AboutActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".OfficialActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".MainActivity"/>
     </application>
 
 </manifest>
