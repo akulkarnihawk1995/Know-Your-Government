@@ -1,3 +1,35 @@
 <resources>
-    <string name="app_name">Know-Your-Government-SHDH</string>
+    <string name="app_name">Know Your Government</string>
+    <string name="no_perm">Unable to detect Location</string>
+    <string name="no_locs">Location Unavailable</string>
+    <string name="networkErrorTitle">No Network Connection</string>
+    <string name="networkErrorMsg1">Civic data can not be loaded without a Network Connection</string>
+    <string name="networkErrorMsg2">You can not search without a Network Connection.</string>
+    <string name="locationErrorTitle">Need Location Access</string>
+    <string name="locationErrorMsg1">Unable to detect your current location, either refresh and give permission or try searching the location.</string>
+    <string name="search">Search</string>
+    <string name="about">About</string>
+    <string name="separator">separator</string>
+    <string name="negativeBtn2">You changed your mind!</string>
+    <string name="searchTitle">Region in United States</string>
+    <string name="searchMsg">Enter a City, State or a ZIP Code</string>
+    <string name="profile_picture">Profile Picture</string>
+    <string name="party_logo">Party Logo</string>
+    <string name="title_activity_official">OfficialActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="address">Address: </string>
+    <string name="phone">Phone: </string>
+    <string name="email">"Email: "</string>
+    <string name="url">URL:</string>
+    <string name="nullSearchStringMsg">Seems, you\'ve not entered anything!</string>
+    <string name="facebook">Facebook</string>
+    <string name="twitter">Twitter</string>
+    <string name="youtube">You Tube</string>
+    <string name="gplus">Google Plus</string>
+    <string name="dev_note">Developed and Designed by Chirag Khandhar</string>
+    <string name="version">\u00a9 2020 | Version 1.0</string>
+    <string name="powered_by">Powered By</string>
+    <string name="google">Google</string>
+    <string name="cia">Civic Information API</string>
+    <string name="no_location_error">Unable to find the location.\n Please try searching a region within United States</string>
 </resources>
