@@ -19,6 +19,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +30,7 @@ import java.util.Locale;
 
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private SwipeRefreshLayout swiper;
     private RecyclerView rv;
@@ -181,5 +182,26 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    public void updateOfficialData(ArrayList<Official> tempList)
+    {
+        officialArrayList.clear();
+        if(tempList.size()!=0)
+        {
+            officialArrayList.addAll(tempList);
+            no_location.setVisibility(View.GONE);
+        }
+        else
+        {
+            location.setText(getText(R.string.no_locs));
+            no_location.setVisibility(View.VISIBLE);
+        }
+        officialAdapter.notifyDataSetChanged();
 
+    }
+
+
+    @Override
+    public void onClick(View v) {
+
+    }
 }
