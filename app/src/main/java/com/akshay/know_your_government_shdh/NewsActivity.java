@@ -136,3 +136,4 @@ public class NewsActivity extends AppCompatActivity implements View.OnClickListe
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 }
+

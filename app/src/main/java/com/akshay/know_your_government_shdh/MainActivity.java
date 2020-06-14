@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int intrinsicWidth;
     private int intrinsicHeight;
     private Paint mClearPaint;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,6 +137,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
+
     public void setupComponents()
     {
         swiper = findViewById(R.id.swiper);
@@ -147,14 +149,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         mBackground = new ColorDrawable();
-        backgroundColor = getResources().getColor(R.color.red);
-        deleteDrawable = ContextCompat.getDrawable(MainActivity.this, R.drawable.ic_delete);
+        backgroundColor = getResources().getColor(R.color.blue);
+        deleteDrawable = ContextCompat.getDrawable(MainActivity.this, R.drawable.ic_news);
         intrinsicWidth = deleteDrawable.getIntrinsicWidth();
         intrinsicHeight = deleteDrawable.getIntrinsicHeight();
         mClearPaint = new Paint();
         mClearPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
-
-
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         itemTouchHelper.attachToRecyclerView(rv);
     }
@@ -223,7 +223,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     geoCodedLatLon = addresses.get(0).getLocality();
                 }
                 Log.d(TAG, "bp: convertLatLon: addresses: " + addresses.get(0).getPostalCode());
-                Toast.makeText(this, "Location Detected: " + addresses.get(0).getLocality(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Location Detected: " + addresses.get(0).getLocality(), Toast.LENGTH_SHORT).show();
             }
 
         }
@@ -393,20 +393,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(i);
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
-    ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT | ItemTouchHelper.DOWN | ItemTouchHelper.UP) {
+
+    ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT | ItemTouchHelper.DOWN | ItemTouchHelper.UP)
+    {
 
         @Override
-        public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+        public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder)
+        {
             return makeMovementFlags(0, ItemTouchHelper.LEFT);
         }
 
         @Override
-        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1)
+        {
             return false;
         }
 
         @Override
-        public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+        public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive)
+        {
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
 
             View itemView = viewHolder.itemView;
@@ -414,7 +419,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             boolean isCancelled = dX == 0 && !isCurrentlyActive;
 
-            if (isCancelled) {
+            if (isCancelled)
+            {
                 clearCanvas(c, itemView.getRight() + dX, (float) itemView.getTop(), (float) itemView.getRight(), (float) itemView.getBottom());
                 super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
                 return;
@@ -435,26 +441,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             deleteDrawable.draw(c);
 
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
-
-
         }
 
-        private void clearCanvas(Canvas c, Float left, Float top, Float right, Float bottom) {
+        private void clearCanvas(Canvas c, Float left, Float top, Float right, Float bottom)
+        {
             c.drawRect(left, top, right, bottom, mClearPaint);
 
         }
 
         @Override
-        public float getSwipeThreshold(@NonNull RecyclerView.ViewHolder viewHolder) {
+        public float getSwipeThreshold(@NonNull RecyclerView.ViewHolder viewHolder)
+        {
             return 0.7f;
         }
 
         @Override
-        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i)
+        {
             int position = rv.getChildAdapterPosition(viewHolder.itemView);
-            officialArrayList.remove(position);
-            officialAdapter.notifyDataSetChanged();
+            String token = officialArrayList.get(position).getName();
+            Log.d(TAG, "news_clicked: bp: TOKEN: " + token);
+            Intent intent = new Intent(MainActivity.this,NewsActivity.class);
+            intent.putExtra("token", token);
+            startActivity(intent);
         }
     };
-
 }

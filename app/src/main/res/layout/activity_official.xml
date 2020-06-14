@@ -225,24 +225,41 @@
                 android:orientation="horizontal"
                 app:layout_constraintGuide_percent="0.6019152" />
 
-            <ImageView
-                android:id="@+id/dp"
+            <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginTop="8dp"
-                android:adjustViewBounds="true"
-                android:background="@drawable/dp_background"
-                android:clickable="true"
-                android:contentDescription="@string/profile_picture"
-                android:cropToPadding="true"
-                android:elevation="4dp"
-                android:onClick="expandImage"
-                android:scaleType="fitCenter"
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="4dp"
                 app:layout_constraintBottom_toTopOf="@+id/guideline9"
                 app:layout_constraintEnd_toStartOf="@+id/verticalRight"
                 app:layout_constraintStart_toStartOf="@+id/verticalLeft"
-                app:layout_constraintTop_toBottomOf="@+id/party"
-                app:srcCompat="@drawable/default_dp" />
+                app:layout_constraintTop_toBottomOf="@+id/party">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/dp"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:adjustViewBounds="true"
+                        android:clickable="true"
+                        android:contentDescription="@string/profile_picture"
+                        android:cropToPadding="true"
+                        android:elevation="4dp"
+                        android:onClick="expandImage"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/default_dp" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
 
             <ImageView
                 android:id="@+id/partyLogo"
@@ -348,10 +365,16 @@
                 android:id="@+id/news"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/news_btn"
+                android:drawableStart="@drawable/ic_news_black"
+                android:drawablePadding="8dp"
                 android:onClick="news_clicked"
-                android:text="News"
+                android:padding="8dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:text="@string/learn_more"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/detailsCard" />
 
