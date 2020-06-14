@@ -34,7 +34,7 @@ public class NewsLoader extends AsyncTask<String, Void, ArrayList<Article>>
         ArrayList<Article> finalData;
         String token = strings[0];
         Log.d(TAG, "doInBackground: bp: Token: " + token);
-        String URL = "http://newsapi.org/v2/everything?q="+token+"&apiKey=" + "5d6888d512254b2ca0d3f1cc56fcdfa9";
+        String URL = "http://newsapi.org/v2/everything?q="+token+"&apiKey=" + BuildConfig.NEWS_KEY;
         String data = getOfficialDatafromURL(URL);
         finalData = parseJSON(data);
         return finalData;
